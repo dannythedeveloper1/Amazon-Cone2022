@@ -13,11 +13,16 @@ const reducer = (state, action) => {
                 basket: [...state.basket, action.item],
             }
         case 'REMOVE_FROM_BASKET':
-            let basketCopy = [...state.basket];
-            const filteredBasket = basketCopy.filter((item) => item.id !== action.id);
+            const index = state.basket.findIndex(
+                (basketItem) => basketItem.id === action.id
+            );
+            let newBasket = [...state.basket];
+            if (index >= 0) {
+                newBasket.splice(index, 1);
+            }
             return {
                 ...state,
-                basket: filteredBasket,
+                basket: newBasket,
             }
         case 'SET_USER':
             return {
